@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>View jokes</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h2 class="text-center">All jokes</h2>
+				</div>
+				<div class="panel-body">
+					<table class="table table-bordered">
+						<thead>
+    						<tr>
+      							<th scope="col">#</th>
+      							<th scope="col">Kategorija</th>
+      							<th scope="col">Vic</th>
+      							<th scope="col">Likes</th>
+      							<th scope="col">Dislikes</th>
+      							<th scope="col">Razlika</th>
+      							<th scope="col">Like</th>
+      							<th scope="col">Dislike</th>
+    						</tr>
+  						</thead>
+  						<tbody>
+  							<th:block th:each="category : ${categories}">
+  								<th:block th:each="joke : ${category.jokes}">
+  									<tr>
+  										<td th:text="${joke.idJoke}"></td>
+  										<td th:text="${category.name}"></td>
+  										<td th:text="${joke.content}"></td>
+  										<td th:text="${joke.likes}"></td>
+  										<td th:text="${joke.dislikes}"></td>
+  										<td th:text="${joke.razlika}"></td>
+  										<td>
+  											<form th:action="@{/like}" method="post">
+												<input type="hidden" id="idJoke" name="idJoke" th:value="${joke.idJoke}" />
+												<input type="submit" class="btn btn-success" value="Like"/>
+											</form> 										
+  										</td>
+  								
+  										<td>
+  											<form th:action="@{/dislike}" method="post">
+												<input type="hidden" id="idJoke" name="idJoke" th:value="${joke.idJoke}" />
+												<input type="submit" class="btn btn-danger" value="Dislike"/>
+											</form> 										
+  										</td>
+  									</tr>
+  								</th:block>					
+  							</th:block>
+  						</tbody>
+					</table>		
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-sm-4 col-md-4 col-lg-4"></div>
+				<div class="col-sm-4 col-md-4 col-lg-4 text-center">
+					<form th:action="@{/new}" method="post">
+						<input type="submit" class="btn btn-primary" value="Create new joke"/>
+					</form>		
+				</div>
+				<div class="col-sm-4 col-md-4 col-lg-4"></div>			
+			</div>
+		</div>
+	</body>
+</html>
